@@ -18,9 +18,22 @@ document.addEventListener('DOMContentLoaded', () => {
     enter.style.height = '30px';
     enter.style.cursor = 'pointer';
     enter.style.marginLeft = '10px';
-    
-
     body.appendChild(enter)
+
+    enter.addEventListener('click', submit)
+
+
+    function submit(e) {
+        e.preventDefault();
+        fetch('/api/addTask', {
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify({data: input.value})
+        })
+        .then(data => data.json())
+        .then(data => console.log('data ->',  data))
+        console.log(input.value)
+    }
 
 
 
