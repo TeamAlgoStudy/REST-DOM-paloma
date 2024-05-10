@@ -1,12 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv').config();
 const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
-const apiRouter = require('./routes/api.js');
+const taskRouter = require('./routes/task.js');
+const userRouter = require('./routes/user.js');
 
-dotenv.config({ path: './.env' });
 
 
 mongoose.connect(process.env.MONGO_URI)
@@ -16,7 +16,8 @@ mongoose.connection.once('open', () => {
 
 app.use(express.json())
 app.use(express.static(path.join(__dirname, '../client')))
-app.use('/api', apiRouter);
+app.use('/api', taskRouter);
+app.use('/api/auth', userRouter);
 
 
 
